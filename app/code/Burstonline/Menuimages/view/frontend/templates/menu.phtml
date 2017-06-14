@@ -1,0 +1,46 @@
+<?php
+$categoriesLevel0 = $this->getRootCategories();
+
+if($categoriesLevel0) {
+
+    echo "<ul>";
+
+    foreach ($categoriesLevel0 as $categoryLevel0) {
+?>
+        <li><a href="<?php echo $this->getCategoryUrl($categoryLevel0); ?>"
+               class="menu-heading"><?php echo $categoryLevel0->getName(); ?></a>
+
+        <?php
+        $categoriesLevel1 = $this->getSubCategories($categoryLevel0);
+
+        if ($categoriesLevel1) {
+
+            echo "<ul>";
+
+            foreach ($categoriesLevel1 as $subCategoryLevel1) {
+
+                echo "<li><a href='" . $this->getCategoryUrl($subCategoryLevel1) . "'>" . $subCategoryLevel1->getName() . "</a>";
+               
+                $categoriesLevel2 = $this->getSubCategories($subCategoryLevel1);
+
+                if ($categoriesLevel2) {
+
+                    echo "<ul>";
+
+                    foreach ($categoriesLevel2 as $subCategoryLevel2) {
+                        echo "<li><a href='" . $this->getCategoryUrl($subCategoryLevel2) . "'>" . $subCategoryLevel2->getName() . "</a></li>";
+                    }
+                    echo "</ul>";
+                }
+
+                echo "</li>";
+            }
+
+            echo "</ul>";
+        }
+
+        echo "</li>";
+    }
+
+    echo "</ul>";
+}

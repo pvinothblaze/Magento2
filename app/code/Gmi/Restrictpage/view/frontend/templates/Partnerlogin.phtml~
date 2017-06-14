@@ -1,0 +1,59 @@
+<div class="row">
+<div class="col-md-6 col-sm-12">
+<form class="form" action="partnerlogin/authentication/result" method="post" name="page-pass" id="page-pass">
+
+		<fieldset class="fieldset">
+			<div class="form-head" style='font-family: "RobotoSlab-Bold";font-weight: bold;color: #003e7e;font-size: 26px;'><span><?php /* @escapeNotVerified */ echo __('School Partner Login') ?></span></div><br>
+			<div class="form-group">
+					<label for="Page" class="label">
+						<span><?php /* @escapeNotVerified */ echo __('Select School') ?></span>
+					</label>
+
+				  <br/>
+				<div class="control">
+						<select id="page" name="pageid" class="required-entry">
+						  <option value="">Select Your School</option>
+						  <option value="1">Westwood</option>
+						  <option value="2">Philips</option>
+						  <option value="3">Roxbury Latin</option>
+						  <option value="4">Natick</option>
+						  <option value="5">Sscp</option>
+						  <option value="6">Partnership</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="Page" class="label">
+					<span><?php /* @escapeNotVerified */ echo __('School Password') ?></span>
+				</label>
+				<div class="control">
+					<input type="password" id="password" 
+						   name="password"
+						   class="input-text required-entry">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="actions-toolbar">
+					<div class="primary">
+						<button type="submit" class="btn btn-success" title="<?php /* @escapeNotVerified */ echo __('Submit') ?>">
+							<span><?php /* @escapeNotVerified */ echo __('Submit') ?></span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+</form>
+</div>
+</div>
+<script type="text/javascript">
+require([
+    'jquery',
+    'mage/mage'
+], function($){
+
+   var dataForm = $('#page-pass');
+   dataForm.mage('validation', {});
+
+});
+</script>
+

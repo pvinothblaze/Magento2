@@ -1,0 +1,79 @@
+<?php
+$countryList=$block->getCountries();
+$regionList=$block->getRegion();
+?>
+<h2>Estimate Shipping</h2>
+<form data-mage-init='{"validation": {}}' class="ship_estimate" id="estimate-form" action="<?php /* @escapeNotVerified */ echo $block->getFormAction(); ?>" method="post" >
+	<!--<div class="field country">
+		<label class="label" for="country"><span><?php echo __('Country') ?></span></label>
+		<div class="control">
+			<?php //echo $countryList?>
+		</div>
+	</div>-->
+	<div class="field country">
+		<label class="label" for="region"><span><?php  echo __('Region') ?></span></label>
+		<div class="control">
+			<?php echo $regionList?>
+		</div>
+	</div>
+	<div class="field country">
+		<label class="label" for="region"><span><?php  echo __('Zipcode') ?></span></label>
+		<div class="control">
+			<input name="zipcode" type="text" value="33076" id="zipcode" data-validate="{required:true, 'validate-zip-us':true}">
+		</div>
+	</div>
+	<input name="productid" type="hidden" value="<?php echo $block->getProductId();?>" id="productid">
+	<div class="field country">
+		<div class="control">
+			<input type="submit" value="Submit" name="click" class="estimateclass">
+		</div>
+	</div>
+</form>
+<script type="text/javascript">
+	require(['jquery','mage/mage'],function($){
+		var dataForm = $('#estimate-form');
+		//var ret = $(dataForm).validation('isValid');
+             //console.log(ret);
+		 jQuery(document).ready(function(){          
+            jQuery('.estimateclass').on( 'click', function (e) {
+				e.preventDefault(); 
+				var existhtml='';
+				jQuery('#estimate-result').html(existhtml);
+			
+			 var region=$('#state').val();
+			 var zipcode=$('#zipcode').val();
+			 var productid=$('#productid').val();
+			 if($(dataForm).validation() && $(dataForm).validation('isValid')) { 
+				jQuery.ajax({
+					type: "POST",
+					url:  "<?php /* @escapeNotVerified */ echo $block->getFormAction(); ?>", 
+					data :{'zipcode':zipcode,'region':region,'productid':productid},
+					dataType: 'html',
+					success: function(responsce){
+						
+						var data = $.parseJSON(responsce);
+						var output= "<ul>";
+						if(data.responsce){
+							
+
+								for (i=0; i < data.responsce.length; i++){
+									output += "<li>" + data.responsce[i].title + " : " + data.responsce[i].price + ".00 </li>";
+								}
+
+								
+							}
+							else
+							{
+								output += "<li>" + data.error + " </li>";
+							}
+							output += "</ul>";
+						jQuery('#estimate-result').append(output);
+					}
+				}); // ajax function end here
+			}
+		});
+	});
+});
+ </script>
+<div id='estimate-result'>
+</div>

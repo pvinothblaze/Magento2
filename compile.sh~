@@ -1,0 +1,9 @@
+#php -dmemory_limit=6G bin/magento setup:upgrade
+rm -f var/* -R
+rm -f pub/static/* -R
+php -dmemory_limit=6G bin/magento setup:di:compile
+php -dmemory_limit=6G bin/magento setup:static-content:deploy
+chmod 0777 var/* -R
+chmod 0777 pub/static/* -R
+chmod 0777 pub/media/* -R
+php bin/magento cache:flush
